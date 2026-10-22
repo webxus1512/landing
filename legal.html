@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NubeXpro - Almacenamiento y Respaldos Cloud S3 en México</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons for UI elements -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES Y DISEÑO BASE
+       ========================================================================== */
+    :root {
+      --primary: #0284c7;        /* Azul corporativo */
+      --primary-dark: #0369a1;
+      --accent: #10b981;         /* Turquesa / Verde NubeXpro */
+      --accent-hover: #059669;
+      --dark: #0f172a;
+      --slate: #334155;
+      --light-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--light-bg);
+      color: var(--slate);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ==========================================================================
+       NAVBAR BARRA PRINCIPAL
+       ========================================================================== */
+    .header-navbar {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-sm);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* LOGO */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: var(--dark);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-icon {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+
+    .logo span.highlight {
+      color: var(--accent);
+    }
+
+    /* LINKS DE NAVEGACIÓN */
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--slate);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+    }
+
+    /* DROPDOWN MENU */
+    .nav-item-dropdown {
+      position: relative;
+    }
+
+    .dropdown-arrow {
+      font-size: 0.75rem;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-item-dropdown:hover .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      width: 320px;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 0.75rem;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+
+    .nav-item-dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      padding: 0.75rem 0.8rem;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: var(--transition);
+    }
+
+    .dropdown-item:hover {
+      background-color: #f0f9ff;
+    }
+
+    .dropdown-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .icon-pyme { background-color: #e0f2fe; color: #0284c7; }
+    .icon-veeam { background-color: #ecfdf5; color: #10b981; }
+    .icon-cctv { background-color: #fef3c7; color: #d97706; }
+
+    .dropdown-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--dark);
+      display: block;
+    }
+
+    .dropdown-desc {
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    /* BOTÓN WHATSAPP */
+    .btn-whatsapp {
+      background-color: #25d366;
+      color: white;
+      padding: 0.65rem 1.3rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+      transition: var(--transition);
+    }
+
+    .btn-whatsapp:hover {
+      background-color: #1eb857;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    /* MENÚ HAMBURGUESA MOVIL */
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--dark);
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       HERO & SECCIÓN INTERACTIVA DE PREVISUALIZACIÓN DE SERVICIOS
+       ========================================================================== */
+    .hero-section {
+      padding: 4rem 1.5rem 2rem 1.5rem;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: #e0f2fe;
+      color: var(--primary-dark);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: #64748b;
+      margin-bottom: 2.5rem;
+    }
+
+    /* TABS SWITCHER INTERACTIVO */
+    .preview-container {
+      max-width: 1100px;
+      margin: 0 auto 5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .tabs-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 0.85rem 1.5rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--slate);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .tab-btn.active {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    }
+
+    /* CARD DE CONTENIDO INTERACTIVO */
+    .service-card {
+      display: none;
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      animation: fadeIn 0.4s ease-in-out forwards;
+    }
+
+    .service-card.active {
+      display: grid;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-info h3 {
+      font-size: 1.8rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .card-info p {
+      color: #64748b;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--slate);
+    }
+
+    .feature-list li i {
+      color: var(--accent);
+      background-color: #ecfdf5;
+      padding: 0.25rem;
+      border-radius: 50%;
+      font-size: 0.85rem;
+    }
+
+    /* MOCKUP VISUAL PREVIEW */
+    .card-preview-visual {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      border-radius: 16px;
+      padding: 1.75rem;
+      color: white;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mockup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .mockup-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red { background-color: #ef4444; }
+    .dot-yellow { background-color: #f59e0b; }
+    .dot-green { background-color: #10b981; }
+
+    .mockup-badge {
+      font-size: 0.75rem;
+      background: rgba(255,255,255,0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      color: #94a3b8;
+    }
+
+    .mockup-body {
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px dashed #334155;
+    }
+
+    .status-online { color: #10b981; font-weight: bold; }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN (MEDIA QUERIES)
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .service-card {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1.75rem;
+      }
+
+      .hero-title {
+        font-size: 2.1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-toggle {
+        display: block;
+      }
+
+      .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--card-bg);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem 1.5rem;
+        gap: 1.5rem;
+        transition: var(--transition);
+        overflow-y: auto;
+      }
+
+      .nav-menu.active {
+        left: 0;
+      }
+
+      .dropdown-menu {
+        position: static;
+        transform: none;
+        width: 100%;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        border: none;
+        padding-left: 1rem;
+        display: none;
+      }
+
+      .nav-item-dropdown.active .dropdown-menu {
+        display: block;
+      }
+
+      .btn-whatsapp {
+        width: 100%;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVBAR BARRA DE NAVEGACIÓN
+       ========================================================================== -->
+  <header class="header-navbar">
+    <div class="nav-container">
+      <!-- Logo NubeXpro -->
+     <img src="images/logo-hosting-light.png" alt="Descripción de la imagen">
+
+
+      <!-- Menú de Navegación Principal -->
+      <nav>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#" class="nav-link active">Inicio</a></li>
+          
+          <!-- Dropdown Soluciones -->
+          <li class="nav-item-dropdown" id="dropdownItem">
+            <a href="#soluciones" class="nav-link">
+              Soluciones <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+            </a>
+            <div class="dropdown-menu">
+              <a href="#pyme" class="dropdown-item" onclick="switchTab('pyme')">
+                <div class="dropdown-icon icon-pyme">
+                  <i class="fa-solid fa-folder-tree"></i>
+                </div>
+                <div>
+                  <span class="dropdown-title">Almacenamiento PyME</span>
+                  <p class="dropdown-desc">Montaje de disco local y archivos compartidos para ERPs.</p>
+                </div>
+              </a>
+
+              <a href="#veeam" class="dropdown-item" onclick="switchTab('veeam')">
+                <div class="dropdown-icon icon-veeam">
+                  <i class="fa-solid fa-server"></i>
+                </div>
+                <div>
+                  <span class="dropdown-title">Respaldos Veeam</span>
+                  <p class="dropdown-desc">Snapshots de servidores con réplica S3 inmutable.</p>
+                </div>
+              </a>
+
+              <a href="#cctv" class="dropdown-item" onclick="switchTab('cctv')">
+                <div class="dropdown-icon icon-cctv">
+                  <i class="fa-solid fa-video"></i>
+                </div>
+                <div>
+                  <span class="dropdown-title">Alianzas CCTV</span>
+                  <p class="dropdown-desc">Resguardo de grabaciones NVR/DVR en la nube para instaladores.</p>
+                </div>
+              </a>
+            </div>
+          </li>
+
+          <li><a href="precios.html" class="nav-link">Precios</a></li>
+          <li><a href="legal.html" class="nav-link">Sobre Nosotros</a></li>
+          
+          <!-- Botón de Contacto WhatsApp dentro del menú para móviles -->
+          <li>
+            <a href="https://wa.me/529373856381?text=Hola,%20me%20interesan%20los%20servicios%20de%20NubeXpro" target="_blank" class="btn-whatsapp">
+              <i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Botón Menú Hamburguesa Móvil -->
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menú">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       SECCIÓN HERO & SELECTOR INTERACTIVO DE SERVICIOS
+       ========================================================================== -->
+  <section class="hero-section">
+    <div class="hero-badge">
+      <i class="fa-solid fa-shield-halved"></i> Almacenamiento e Infraestructura S3 en México
+    </div>
+    <h1 class="hero-title">AVISO DE PRIVACIDAD INTEGRAL</h1>
+    <p class="hero-subtitle">
+1. Identidad y Domicilio del Responsable <br>
+Arturo Cortés Martínez (en lo sucesivo identificado comercialmente como NubeXpro), con domicilio ubicado en Casas Duplex Número 18, Colonia/Poblado Ingenio Santa Rosalía, C.P. 86500, Cárdenas, Tabasco, México, es el responsable del tratamiento, uso, almacenamiento y protección de sus datos personales.<br><br>
+
+2. Infraestructura y Estándares Internacionales de Seguridad (Aliado Tecnológico)<br>
+Para garantizar la máxima disponibilidad, cifrado y protección de la información resguardada, NubeXpro utiliza la infraestructura de almacenamiento S3 de Wasabi Technologies Inc., líder mundialmente reconocido en almacenamiento de datos en la nube de alto rendimiento.<br><br>
+
+La infraestructura utilizada por NubeXpro a través de Wasabi cumple estrictamente con los más altos estándares internacionales de seguridad física, lógica y normativa:
+
+Inmutabilidad de Datos (Object Lock): Protección activa contra ransomware, borrados accidentales o modificaciones no autorizadas mediante políticas de retención estricta.
+
+Cifrado de Alto Nivel: Cifrado automático de datos en reposo (AES-256) y en tránsito mediante protocolos seguros (TLS 1.2 / TLS 1.3).
+
+Certificaciones de Seguridad Globales: Cumplimiento verificado con normativas internacionales de auditoría y privacidad, tales como SOC 2 Type II, ISO/IEC 27001, HIPAA (salud), PCI-DSS (seguridad en tarjetas/pagos) y GDPR (Reglamento General de Protección de Datos).
+
+Alta Disponibilidad: Redundancia multizona y disponibilidad garantizada del 99.999999999% (11 nueves) de durabilidad de los datos.<br><br>
+
+3. Confidencialidad, Llaves de Cifrado y Cero Acceso a Contraseñas<br>
+NubeXpro declara de manera expresa y categórica que:
+
+Sin acceso a contraseñas ni claves secretas: NubeXpro NO almacena, gestiona, conoce ni tiene acceso a las contraseñas personales, frases de recuperación, credenciales de acceso local ni llaves privadas de cifrado definidas por el cliente para el resguardo de su información.
+
+Uso exclusivo para el servicio contratado: La información, archivos, bases de datos, imágenes de videovigilancia y copias de seguridad de los clientes NUNCA serán utilizados, analizados, leídos, comercializados ni procesados para ningún fin distinto al cumplimiento estricto del servicio de respaldo y almacenamiento en la nube S3 contratado.
+
+Privacidad por diseño (Zero-Knowledge / Cifrado Extremo a Extremo): La información es cifrada directamente en los extremos o mediante credenciales S3 aisladas, garantizando que únicamente el personal autorizado por el cliente posee la capacidad técnica para descifrar o visualizar el contenido depositado.<br><br>
+
+4. Datos Personales que se Recaban 
+Para llevar a cabo las finalidades descritas en el presente Aviso de Privacidad, recabaremos únicamente las siguientes categorías de datos personales administrativos de contacto y facturación:
+
+Datos de identificación y contacto: Nombre completo, razón social o nombre de la empresa, dirección IP, correo electrónico, teléfono de contacto y domicilio fiscal o de instalación.
+
+Datos de facturación y pago: Registro Federal de Contribuyentes (RFC), datos fiscales y comprobantes de pago.
+
+Datos técnicos de infraestructura: Identificadores de red, nombres de host/servidores y cuentas de acceso técnico requeridas exclusivamente para el aprovisionamiento de repositorios de datos S3.
+
+Nota: NubeXpro no solicita ni recaba datos personales sensibles (como origen étnico, estado de salud, información genética, creencias religiosas o preferencia sexual).<br><br>
+
+5. Finalidades del Tratamiento de los Datos Personales
+Sus datos personales y técnicos serán utilizados exclusivamente para las siguientes finalidades primarias y necesarias para la prestación de nuestros servicios tecnológicos:
+
+Almacenamiento Local y en la Nube Tradicional:
+
+Configuración, montaje y sincronización de unidades de almacenamiento virtualizadas (S3 / Wasabi Cloud Storage).
+
+Aprovisionamiento de repositorios y soporte técnico para el acceso a carpetas y archivos en la nube.
+
+Snapshots y Resguardo de Servidores:
+
+Configuración de repositorios inmutables de almacenamiento S3 para copias de seguridad (snapshots) de servidores físicos o virtuales (orquestación mediante software como Veeam Backup & Replication).
+
+Monitoreo de tareas de respaldo, continuidad del negocio y asistencia técnica en procesos de restauración ante catástrofes o ataques cibernéticos.
+
+Videovigilancia y Almacenamiento CCTV:
+
+Gestión de almacenamiento en la nube S3 y repositorios locales para el resguardo de grabaciones y flujos de video de sistemas de CCTV (DVR/NVR) en alianza con integradores e instaladores.
+
+Gestión Administrativa y Comercial:
+
+Facturación, cobro y contratación de servicios.
+
+Envío de notificaciones de mantenimiento, alertas técnicas o actualizaciones de infraestructura.
+
+De manera secundaria, podremos utilizar su información de contacto para el envío de boletines promocionales, ofertas comerciales o encuestas de satisfacción. Si no desea que sus datos se utilicen para estas finalidades secundarias, puede manifestarlo enviando un correo electrónico a nuestro departamento de contacto.<br><br>
+
+6. Tratamiento del Contenido Almacenado por el Cliente
+NubeXpro actúa exclusivamente como proveedor de infraestructura, conectividad y gestión de almacenamiento en la nube S3 y nodos locales. El cliente conserva en todo momento la titularidad, propiedad y control absoluto sobre los archivos, copias de seguridad de servidores (snapshots) y grabaciones de videovigilancia (CCTV) que decida depositar en la infraestructura.
+
+Debido a las políticas de cifrado e inmutabilidad implementadas junto con Wasabi, NubeXpro garantiza que su personal no accederá ni transferirá el contenido almacenado por el usuario, salvo por orden judicial expresa de autoridad competente.<br><br>
+
+7. Transferencia de Datos Personales
+NubeXpro no transferirá ni compartirá sus datos personales con terceros nacionales o extranjeros sin su consentimiento previo, salvo las excepciones previstas en el Artículo 37 de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP) y las transferencias operativas estrictamente necesarias para la prestación del servicio de almacenamiento S3 con el proveedor de infraestructura Wasabi Technologies Inc.<br><br>
+
+8. Medios y Procedimiento para Ejercer los Derechos ARCO
+Usted tiene derecho a conocer qué datos personales tenemos de usted, para qué los utilizamos y las condiciones del uso que les damos (Acceso). Asimismo, es su derecho solicitar la corrección de su información personal en caso de que esté desactualizada, sea inexacta o incompleta (Rectificación); que la eliminemos de nuestros registros o bases de datos cuando considere que la misma no está siendo utilizada adecuadamente (Cancelación); así como oponerse al uso de sus datos personales para fines específicos (Oposición). Estos derechos se conocen como Derechos ARCO.<br><br>
+
+Para el ejercicio de cualquiera de los derechos ARCO, usted deberá enviar una solicitud por escrito dirigida a Arturo Cortés Martínez a través de:
+
+Correo electrónico: contacto@nubexpro.com.mx
+
+Domicilio físico: Casas Duplex Número 18, Ingenio Santa Rosalía, Cárdenas, Tabasco, México.
+
+La solicitud deberá contener:
+
+Nombre del titular y correo electrónico o domicilio para recibir la respuesta.
+
+Documento oficial que acredite la identidad del titular (o poder notarial del representante legal).
+
+Descripción clara y precisa de los datos personales respecto de los que se busca ejercer alguno de los derechos ARCO.<br><br>
+
+9. Uso de Cookies y Tecnologías de Rastreo en el Sitio Web
+Nuestro sitio web utiliza cookies y tecnologías similares para mejorar su experiencia de navegación, analizar el tráfico web y almacenar preferencias de usuario. Usted puede desactivar o configurar el uso de cookies en cualquier momento desde las opciones de su navegador de internet.<br><br>
+
+10. Cambios al Aviso de Privacidad
+El presente Aviso de Privacidad puede sufrir modificaciones, cambios o actualizaciones derivadas de nuevos requerimientos legales, de nuestras propias necesidades por los servicios que ofrecemos o de nuestras prácticas de privacidad e infraestructura.<br><br>
+
+Cualquier modificación al presente aviso estará disponible para su consulta en nuestro sitio web oficial: https://www.nubexpro.com.mx/privacidad.
+
+Última actualización: Octubre de 2026.
+  </section>
+
+  
+
+   
+
+  <!-- ==========================================================================
+       FOOTER PROFESIONAL NUBEXPRO
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      
+      <!-- COLUMNA 1: LOGO Y DESCRIPCIÓN -->
+      <div class="footer-col footer-brand">
+        <img src="images/logo-hosting-light.png" alt="Descripción de la imagen">
+        <p class="footer-desc">
+          Infraestructura de almacenamiento en la nube S3 y resguardo de datos de alto rendimiento en México. Soluciones inmutables contra ransomware para PyMEs, servidores y sistemas CCTV.
+        </p>
+        <div class="footer-socials">
+          <a href="https://www.linkedin.com/in/arturo-cort%C3%A9s-martinez-nubexpro/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61595394742303" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://wa.me/529373856381" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <!-- COLUMNA 2: NAVEGACIÓN -->
+      <div class="footer-col">
+        <h4 class="footer-title">Navegación</h4>
+        <ul class="footer-links">
+          <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Inicio</a></li>
+          <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Servicios</a></li>
+          <li><a href="precios.html"><i class="fa-solid fa-angle-right"></i> Precios</a></li>
+          <li><a href="#nosotros"><i class="fa-solid fa-angle-right"></i> Sobre Nosotros</a></li>
+        </ul>
+      </div>
+
+      <!-- COLUMNA 3: SOLUCIONES -->
+      <div class="footer-col">
+        <h4 class="footer-title">Soluciones S3</h4>
+        <ul class="footer-links">
+          <li><a href="#pyme" onclick="switchTab('pyme')"><i class="fa-solid fa-angle-right"></i> Almacenamiento PyME</a></li>
+          <li><a href="#veeam" onclick="switchTab('veeam')"><i class="fa-solid fa-angle-right"></i> Snapshots Veeam</a></li>
+          <li><a href="#cctv" onclick="switchTab('cctv')"><i class="fa-solid fa-angle-right"></i> Alianzas CCTV</a></li>
+          <li><a href="#"><i class="fa-solid fa-angle-right"></i> Bóveda Anti-Ransomware</a></li>
+        </ul>
+      </div>
+
+      <!-- COLUMNA 4: CONTACTO EN MÉXICO -->
+      <div class="footer-col">
+        <h4 class="footer-title">Contacto</h4>
+        <ul class="footer-contact">
+          <li>
+            <i class="fa-solid fa-location-dot"></i>
+            <span>Atención a todo México</span>
+          </li>
+          <li>
+            <i class="fa-brands fa-whatsapp"></i>
+            <a href="https://wa.me/5210000000000" target="_blank">+52 (937) 385 63 81</a>
+          </li>
+          <li>
+            <i class="fa-solid fa-envelope"></i>
+            <a href="mailto:contacto@nubexpro.mx">arturo.cortes@nubexpro.com.mx</a>
+          </li>
+          <li>
+            <i class="fa-solid fa-clock"></i>
+            <span>Lun - Sab: 9:00 AM - 6:00 PM</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM BAR: COPYRIGHT Y LEGALES -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-container">
+        <p>&copy; 2026 NubeXpro. Todos los derechos reservados. Infraestructura S3 en México.</p>
+        <div class="legal-links">
+          <a href="legal.html">Política de Privacidad</a>
+          <span>•</span>
+          <a href="legal.html">Términos de Servicio</a>
+          <span>•</span>
+          <a href="#">Aviso Legal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    /* ==========================================================================
+       ESTILOS DEL FOOTER
+       ========================================================================== */
+    .site-footer {
+      background-color: var(--dark);
+      color: #94a3b8;
+      font-size: 0.9rem;
+      border-top: 3px solid var(--primary);
+    }
+
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 3rem 1.5rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.2fr;
+      gap: 2.5rem;
+    }
+
+    .footer-brand .footer-logo {
+      color: #ffffff;
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-desc {
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: #cbd5e1;
+      font-size: 0.88rem;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .footer-socials a {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-socials a:hover {
+      background-color: var(--primary);
+      color: #ffffff;
+      transform: translateY(-3px);
+    }
+
+    .footer-title {
+      color: #ffffff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 1.4rem;
+      position: relative;
+    }
+
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background-color: var(--accent);
+      border-radius: 2px;
+    }
+
+    .footer-links, .footer-contact {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-links a i {
+      font-size: 0.75rem;
+      color: var(--accent);
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+      padding-left: 4px;
+    }
+
+    .footer-contact li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      color: #cbd5e1;
+    }
+
+    .footer-contact i {
+      color: var(--accent);
+      font-size: 1rem;
+      margin-top: 3px;
+    }
+
+    .footer-contact a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-contact a:hover {
+      color: var(--primary);
+    }
+
+    /* FOOTER BOTTOM BAR */
+    .footer-bottom {
+      background-color: #080d1a;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.5rem 0;
+      font-size: 0.82rem;
+    }
+
+    .footer-bottom-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .legal-links {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .legal-links a {
+      color: #64748b;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .legal-links a:hover {
+      color: #cbd5e1;
+    }
+
+    /* MEDIA QUERIES RESPONSIVE */
+    @media (max-width: 992px) {
+      .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem 2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer-container {
+        grid-template-columns: 1fr;
+        padding-top: 3rem;
+      }
+
+      .footer-bottom-container {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+
+  <!-- ==========================================================================
+       JAVASCRIPT FUNCIONAL
+       ========================================================================== -->
+  <script>
+    // 1. MENU HAMBURGUESA MOVIL
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    mobileToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      const icon = mobileToggle.querySelector('i');
+      if(navMenu.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-xmark');
+      } else {
+        icon.classList.remove('fa-xmark');
+        icon.classList.add('fa-bars');
+      }
+    });
+
+    // Toggle dropdown para dispositivos táctiles/móviles
+    const dropdownItem = document.getElementById('dropdownItem');
+    dropdownItem.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        dropdownItem.classList.toggle('active');
+      }
+    });
+
+    // 2. FUNCIÓN PARA ALTERNAR PESTAÑAS Y SECCIONES
+    function switchTab(serviceKey) {
+      // Remover clase active de todos los botones
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      
+      // Remover clase active de todas las tarjetas
+      document.querySelectorAll('.service-card').forEach(card => card.classList.remove('active'));
+
+      // Activar botón y tarjeta seleccionada
+      const targetBtn = document.getElementById(`tab-btn-${serviceKey}`);
+      const targetCard = document.getElementById(`card-${serviceKey}`);
+
+      if (targetBtn && targetCard) {
+        targetBtn.classList.add('active');
+        targetCard.classList.add('active');
+      }
+
+      // Cerrar menú móvil al hacer clic si está abierto
+      if (window.innerWidth <= 768) {
+        navMenu.classList.remove('active');
+        const icon = mobileToggle.querySelector('i');
+        icon.classList.remove('fa-xmark');
+        icon.classList.add('fa-bars');
+      }
+    }
+  </script>
+</body>
+</html>

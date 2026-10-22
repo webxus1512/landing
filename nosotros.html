@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre Nosotros - NubeXpro</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* --- RESET Y ESTILOS GENERALES --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+    body {
+      background-color: #ffffff;
+      color: #333333;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* --- NAVBAR PRINCIPAL --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 5%;
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-size: 26px;
+      font-weight: 900;
+      color: #111111;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .logo span.x { color: #00a8ec; }
+    .logo-cloud {
+      background: linear-gradient(135deg, #00a8ec, #00d2ff);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin-left: 4px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      gap: 25px;
+    }
+    .nav-links a {
+      font-weight: 600;
+      font-size: 15px;
+      color: #444444;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #00a8ec; }
+
+    /* Dropdown Soluciones */
+    .dropdown { position: relative; }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #ffffff;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      border-radius: 8px;
+      min-width: 240px;
+      padding: 10px 0;
+      border-top: 3px solid #00a8ec;
+    }
+    .dropdown:hover .dropdown-menu { display: block; }
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #444;
+      font-weight: 500;
+    }
+    .dropdown-menu a:hover {
+      background-color: #f4f9fc;
+      color: #00a8ec;
+    }
+
+    .ws-icon-header {
+      font-size: 28px;
+      color: #111;
+      transition: color 0.2s;
+    }
+    .ws-icon-header:hover { color: #25d366; }
+
+    /* --- HERO SOBRE NOSOTROS --- */
+    .about-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .about-hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .badge-tag {
+      background-color: rgba(0, 168, 236, 0.2);
+      color: #38bdf8;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 15px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .about-hero h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
+    .about-hero p {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    /* --- HISTORIA Y FUNDADOR --- */
+    .section-history {
+      padding: 70px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .history-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+    .history-text h2 {
+      font-size: 1.8rem;
+      color: #0f172a;
+      margin-bottom: 18px;
+      font-weight: 800;
+    }
+    .history-text p {
+      color: #475569;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+    .founder-card {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 30px;
+      border-left: 4px solid #00a8ec;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    }
+    .founder-card h3 {
+      font-size: 1.25rem;
+      color: #0f172a;
+      margin-bottom: 5px;
+    }
+    .founder-card .role {
+      color: #00a8ec;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+    .founder-card p {
+      font-size: 0.95rem;
+      color: #64748b;
+    }
+
+    /* --- PILARES Y TECNOLOGÍA --- */
+    .section-pilares {
+      background-color: #f8fafc;
+      padding: 70px 20px;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .pilares-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-title-center {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+    .section-title-center h2 {
+      font-size: 2rem;
+      color: #0f172a;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .section-title-center p {
+      color: #64748b;
+      font-size: 1.05rem;
+    }
+
+    .pilares-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .pilar-card {
+      background: #ffffff;
+      padding: 30px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+      transition: transform 0.3s ease;
+    }
+    .pilar-card:hover {
+      transform: translateY(-5px);
+    }
+    .pilar-icon {
+      width: 50px;
+      height: 50px;
+      background: #e0f2fe;
+      color: #00a8ec;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    .pilar-card h3 {
+      font-size: 1.25rem;
+      color: #0f172a;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .pilar-card p {
+      color: #64748b;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* --- BANNER DE PRIVACIDAD ABSOLUTA --- */
+    .section-privacy-banner {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .privacy-box {
+      background: linear-gradient(135deg, #00a8ec 0%, #0284c7 100%);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      box-shadow: 0 10px 25px rgba(0, 168, 236, 0.25);
+    }
+    .privacy-box i {
+      font-size: 55px;
+      opacity: 0.9;
+    }
+    .privacy-box h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      font-weight: 800;
+    }
+    .privacy-box p {
+      font-size: 1rem;
+      opacity: 0.95;
+      line-height: 1.5;
+    }
+
+    /* --- PROMESA DE VALOR --- */
+    .section-promise {
+      padding: 70px 20px 80px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .promise-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+    .promise-card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 30px;
+      border: 1px solid #cbd5e1;
+    }
+    .promise-card h3 {
+      font-size: 1.2rem;
+      color: #0f172a;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .promise-card h3 i { color: #00a8ec; }
+    .promise-card p {
+      color: #475569;
+      font-size: 0.95rem;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: #111827;
+      color: #9ca3af;
+      padding: 60px 5% 20px 5%;
+      font-size: 14px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto 40px auto;
+    }
+    .footer-col h4 {
+      color: #ffffff;
+      font-size: 16px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a:hover { color: #00a8ec; }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #1f2937;
+      color: #6b7280;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 992px) {
+      .history-grid { grid-template-columns: 1fr; }
+      .pilares-grid { grid-template-columns: 1fr; }
+      .promise-grid { grid-template-columns: 1fr; }
+      .privacy-box { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <img src="images/logo-hosting-light.png" alt="Descripción de la imagen">
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li class="dropdown">
+          <a href="servicios.html">Servicios <i class="fa-solid fa-chevron-down" style="font-size: 11px;"></i></a>
+          <div class="dropdown-menu">
+            <a href="servicios.html#pyme"><i class="fa-regular fa-folder-open"></i> Almacenamiento PyME</a>
+            <a href="servicios.html#veeam"><i class="fa-solid fa-server"></i> Snapshots Veeam</a>
+            <a href="servicios.html#cctv"><i class="fa-solid fa-video"></i> Alianzas CCTV</a>
+          </div>
+        </li>
+        <li><a href="precios.html">Precios</a></li>
+        <li><a href="somos.html" class="active">Sobre Nosotros</a></li>
+      </ul>
+    </nav>
+    <a href="https://wa.me/5219931234567" target="_blank" class="ws-icon-header" title="Contacto WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+  </header>
+
+  <!-- HERO SOBRE NOSOTROS -->
+  <section class="about-hero">
+    <div class="about-hero-content">
+      <span class="badge-tag"><i class="fa-solid fa-shield-halved"></i> Tu Aliado Tecnológico</span>
+      <h1>Infraestructura Cloud de Clase Mundial con Atención Local en México</h1>
+      <p>Democratizamos el almacenamiento S3 inmutable, los respaldos automatizados de servidores y la continuidad operativa para empresas, despachos e integradores.</p>
+    </div>
+  </section>
+
+  <!-- HISTORIA Y FUNDADOR -->
+  <section class="section-history">
+    <div class="history-grid">
+      <div class="history-text">
+        <h2>Protegiendo los Activos Digitales de tu Empresa</h2>
+        <p>En <strong>NubeXpro</strong> nacimos con una misión clara: brindar a las pequeñas y medianas empresas soluciones de almacenamiento en la nube de alta velocidad, seguras y económicamente transparentes.</p>
+        <p>Entendemos los riesgos actuales del entorno digital, como los ataques por <i>ransomware</i> o las interrupciones operativas. Por ello, desarrollamos un esquema de infraestructura que combina la sencillez de uso con el respaldo de los centros de datos más avanzados del mundo.</p>
+      </div>
+
+      <div class="founder-card">
+        <h3>Arturo Cortés Martínez</h3>
+        <div class="role">Fundador & Operador de NubeXpro</div>
+        <p>"Nuestra promesa es simple: brindarte almacenamiento inmutable, cero costos sorpresas por descarga de información y la tranquilidad de que tu empresa nunca se detendrá."</p>
+        <p style="margin-top: 15px; font-size: 0.85rem; color: #94a3b8;"><i class="fa-solid fa-location-dot"></i> Operando desde Cárdenas, Tabasco, México.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILARES Y TECNOLOGÍA -->
+  <section class="section-pilares">
+    <div class="pilares-container">
+      <div class="section-title-center">
+        <h2>¿Qué Hace Único a NubeXpro?</h2>
+        <p>Combinamos tecnología S3 de clase mundial con la cercanía y soporte que tu equipo requiere.</p>
+      </div>
+
+      <div class="pilares-grid">
+        <!-- PILAR 1 -->
+        <div class="pilar-card">
+          <div class="pilar-icon"><i class="fa-solid fa-globe"></i></div>
+          <h3>Alianza Global con Wasabi</h3>
+          <p>Respaldamos tu información mediante la infraestructura S3 de <strong>Wasabi Technologies Inc.</strong>, con 99.999999999% (11 nueves) de durabilidad de datos y certificaciones internacionales SOC 2 e ISO 27001.</p>
+        </div>
+
+        <!-- PILAR 2 -->
+        <div class="pilar-card">
+          <div class="pilar-icon"><i class="fa-solid fa-lock"></i></div>
+          <h3>Inmutabilidad <br> Anti-Ransomware</h3>
+          <p>Tus copias de seguridad cuentan con tecnología <i>Object Lock</i>. Un virus o usuario no autorizado no puede modificar ni eliminar tus snapshots durante el periodo de retención configurado.</p>
+        </div>
+
+        <!-- PILAR 3 -->
+        <div class="pilar-card">
+          <div class="pilar-icon"><i class="fa-solid fa-headset"></i></div>
+          <h3>Soporte Técnico en Español</h3>
+          <p>Sin intermediarios ni tickets automatizados en inglés. Te asistimos directamente en la configuración de tus unidades virtuales, consolas Veeam o sistemas NVR/CCTV.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER DE PRIVACIDAD ABSOLUTA -->
+  <section class="section-privacy-banner">
+    <div class="privacy-box">
+      <i class="fa-solid fa-user-shield"></i>
+      <div>
+        <h3>Privacidad Absoluta Garantizada (Zero-Knowledge)</h3>
+        <p>En NubeXpro <strong>NO tenemos acceso a tus contraseñas, claves privadas de cifrado ni archivos resguardados</strong>. Tu información es 100% tuya, cifrada bajo algoritmos AES-256 y utilizada exclusivamente para el propósito de respaldo contratado.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMESA DE VALOR -->
+  <section class="section-promise">
+    <div class="section-title-center">
+      <h2>Nuestra Promesa Operativa</h2>
+      <p>Transparencia y fiabilidad en cada Terabyte administrado.</p>
+    </div>
+
+    <div class="promise-grid">
+      <div class="promise-card">
+        <h3><i class="fa-solid fa-circle-check"></i> Cero Cobro por Egreso (Zero Egress)</h3>
+        <p>Restaura, descarga o consulta tus archivos y snapshots sin sorpresas ni costos adicionales en tu factura mensual.</p>
+      </div>
+
+      <div class="promise-card">
+        <h3><i class="fa-solid fa-circle-check"></i> Multiplataforma & Flexibilidad</h3>
+        <p>Compatible con Windows, Mac, Linux, orquestadores Veeam Backup, Cyberduck, Mountain Duck y sistemas CCTV.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <img src="images/logo-hosting-light.png" alt="Descripción de la imagen">
+        <p>Soluciones avanzadas de almacenamiento S3, nodos locales y respaldos inmutables para empresas en México.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Soluciones</h4>
+        <ul>
+          <li><a href="servicios.html#pyme">Almacenamiento PyME</a></li>
+          <li><a href="servicios.html#veeam">Snapshots Veeam</a></li>
+          <li><a href="servicios.html#cctv">Resguardo CCTV</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="precios.html">Precios</a></li>
+          <li><a href="somos.html">Aviso de privacidad/a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><i class="fa-solid fa-envelope"></i> arturo.cortes@nubexpro.com.mx</li>
+          <li><i class="fa-brands fa-whatsapp"></i> +52 (937) 385 63 81</li>
+          <li><i class="fa-solid fa-location-dot"></i> Cardenas, Tabsco, México</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 NubeXpro. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
