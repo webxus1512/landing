@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="c92709fa-1307-4397-bdf3-942b1ce38635"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NubeXpro - Almacenamiento y Respaldos Cloud S3 en México</title>
+  <title>NubeXpro - Almacenamiento y Respaldos Cloud </title>
 
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -494,6 +495,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- ==========================================================================
@@ -761,6 +763,89 @@
   </footer>
 
   <style>
+    /* --- TARJETA FLOTANTE DE COOKIES --- */
+.cookie-floating-card {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  max-width: 360px;
+  width: calc(100% - 48px);
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid #00a8ec; /* Borde azul NubeXpro */
+  z-index: 99999; /* Asegura que quede por encima de todo */
+  
+  /* Estado inicial visible para pruebas */
+  opacity: 0;
+  transform: translateY(20px);
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+
+.cookie-floating-card.show {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.cookie-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.cookie-emoji {
+  font-size: 22px;
+}
+
+.cookie-header h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.cookie-floating-content p {
+  color: #94a3b8;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  margin: 0 0 16px 0;
+}
+
+.cookie-floating-content p a {
+  color: #38bdf8;
+  text-decoration: underline;
+}
+
+.btn-cookie-accept {
+  width: 100%;
+  background: #00a8ec;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.btn-cookie-accept:hover {
+  background: #0284c7;
+}
+
+@media (max-width: 480px) {
+  .cookie-floating-card {
+    right: 16px;
+    left: 16px;
+    bottom: 16px;
+    width: auto;
+  }
+}
     /* ==========================================================================
        ESTILOS DEL FOOTER
        ========================================================================== */
@@ -999,5 +1084,39 @@
       }
     }
   </script>
+  <!-- ANUNCIO FLOTANTE DE COOKIES -->
+<div id="cookie-banner" class="cookie-floating-card">
+  <div class="cookie-floating-content">
+    <div class="cookie-header">
+      <span class="cookie-emoji">🍪</span>
+      <h4>Uso de Cookies</h4>
+    </div>
+    <p>
+      En <strong>NubeXpro</strong> usamos cookies para asegurar el correcto funcionamiento del sitio y mejorar tu experiencia. Consulta nuestro <a href="legal.html">Aviso de Privacidad</a>.
+    </p>
+    <div class="cookie-floating-buttons">
+      <button id="accept-cookies" class="btn-cookie-accept">Aceptar todas</button>
+    </div>
+  </div>
+</div>
+<script>
+  window.addEventListener("load", function () {
+    const cookieBanner = document.getElementById("cookie-banner");
+    const acceptBtn = document.getElementById("accept-cookies");
+
+    // Verificar si ya aceptó previamente
+    if (!localStorage.getItem("nubexpro_cookies_accepted")) {
+      setTimeout(function() {
+        cookieBanner.classList.add("show");
+      }, 500);
+    }
+
+    // Al hacer clic en aceptar
+    acceptBtn.addEventListener("click", function () {
+      localStorage.setItem("nubexpro_cookies_accepted", "true");
+      cookieBanner.classList.remove("show");
+    });
+  });
+</script>
 </body>
 </html>
