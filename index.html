@@ -556,7 +556,7 @@
           <!-- Botón de Contacto WhatsApp dentro del menú para móviles -->
           <li>
             <a href="https://wa.me/529372286327?text=Hola,%20me%20interesan%20los%20servicios%20de%20NubeXpro" target="_blank" class="btn-whatsapp">
-              <i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp
+              <i class="fa-brands fa-whatsapp"></i> Probar 14 días sin costo.
             </a>
           </li>
         </ul>
@@ -576,26 +576,53 @@
     <div class="hero-badge">
       <i class="fa-solid fa-shield-halved"></i> Almacenamiento e Infraestructura S3 en México
     </div>
-    <h1 class="hero-title">Protege y gestiona tus datos con tecnología Cloud de alto rendimiento</h1>
-    <p class="hero-subtitle">Bóveda de almacenamiento ultra segura, respaldos automatizados e integración transparente para cualquier tipo de negocio.</p>
+    <h1 class="hero-title">Evita que un ciberataque o un fallo de servidor detenga tu empresa.</h1>
+    <p class="hero-subtitle">Respaldos automáticos en la nube, compatibilidad nativa con CONTPAQi/Aspel y protección de Active Directory para tu PyME.</p>
   </section>
 
   <!-- PESTAÑAS / TABS INTERACTIVAS DE PREVISUALIZACIÓN -->
   <div class="preview-container">
     <div class="tabs-wrapper">
-      <button class="tab-btn active" onclick="switchTab('pyme')" id="tab-btn-pyme">
-        <i class="fa-solid fa-building"></i> Almacenamiento PyME
+      <button class="tab-btn active" onclick="switchTab('veeam')" id="tab-btn-veeam">
+        <i class="fa-solid fa-database"></i> Respaldo de servidores
       </button>
-      <button class="tab-btn" onclick="switchTab('veeam')" id="tab-btn-veeam">
-        <i class="fa-solid fa-database"></i> Respaldos Veeam
+      <button class="tab-btn " onclick="switchTab('pyme')" id="tab-btn-pyme">
+        <i class="fa-solid fa-building"></i> Unidad de Red Virtual
       </button>
+      
       <button class="tab-btn" onclick="switchTab('cctv')" id="tab-btn-cctv">
         <i class="fa-solid fa-camera-web"></i> Alianzas CCTV
       </button>
     </div>
-
+ <!-- CONTENIDO PESTAÑA 2: VEEAM -->
+    <div class="service-card active" id="card-veeam">
+      <div class="card-info">
+        <h3><i class="fa-solid fa-server" style="color: var(--accent);"></i> Snapshots con Veeam ó Duplicati</h3>
+        <p>Infraestructura híbrida para empresas con servidores locales o virtuales. Copia local ultrarrápida con réplica automática a nuestra bóveda inmutable.</p>
+        <ul class="feature-list">
+          <li><i class="fa-solid fa-check"></i> Bóveda S3 Inmutable contra ataques de Ransomware.</li>
+          <li><i class="fa-solid fa-check"></i> Nodo local de alta velocidad para restauración instantánea.</li>
+          <li><i class="fa-solid fa-check"></i> Recuperación ante desastres (DRP) en minutos.</li>
+        </ul>
+        <a href="https://wa.me/529372286327?text=Cotizar%20Veeam%20Backup" class="btn-whatsapp" style="border-radius: 10px; background-color: var(--primary);">
+          <i class="fa-solid fa-calculator"></i> Cotizar Servidor
+        </a>
+      </div>
+      <div class="card-preview-visual">
+        <div class="mockup-header">
+          <div class="mockup-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="mockup-badge">Veeam Orchestration Console</span>
+        </div>
+        <div class="mockup-body">
+          <div class="status-row"><span>Job: Backup_Servidor_SRV01</span><span class="status-online">100% OK</span></div>
+          <div class="status-row"><span>Punto de Restauración:</span><span>Hoy 02:00 AM</span></div>
+          <div class="status-row"><span>Inmutabilidad Bloqueada:</span><span>30 Días</span></div>
+          <div class="status-row"><span>Destino Bóveda:</span><span>s3.nubexpro.mx</span></div>
+        </div>
+      </div>
+    </div>
     <!-- CONTENIDO PESTAÑA 1: PYME -->
-    <div class="service-card active" id="card-pyme">
+    <div class="service-card " id="card-pyme">
       <div class="card-info">
         <h3><i class="fa-solid fa-folder-open" style="color: var(--primary);"></i> Nube para PyMEs</h3>
         <p>Conecta la nube S3 de NubeXpro como si fuera una unidad de disco duro local en cada computadora de tu empresa sin cambiar tu forma de trabajar.</p>
@@ -622,33 +649,7 @@
       </div>
     </div>
 
-    <!-- CONTENIDO PESTAÑA 2: VEEAM -->
-    <div class="service-card" id="card-veeam">
-      <div class="card-info">
-        <h3><i class="fa-solid fa-server" style="color: var(--accent);"></i> Snapshots & Veeam Backup</h3>
-        <p>Infraestructura híbrida para empresas con servidores locales o virtuales. Copia local ultrarrápida con réplica automática a nuestra bóveda inmutable.</p>
-        <ul class="feature-list">
-          <li><i class="fa-solid fa-check"></i> Bóveda S3 Inmutable contra ataques de Ransomware.</li>
-          <li><i class="fa-solid fa-check"></i> Nodo local de alta velocidad para restauración instantánea.</li>
-          <li><i class="fa-solid fa-check"></i> Recuperación ante desastres (DRP) en minutos.</li>
-        </ul>
-        <a href="https://wa.me/529372286327?text=Cotizar%20Veeam%20Backup" class="btn-whatsapp" style="border-radius: 10px; background-color: var(--primary);">
-          <i class="fa-solid fa-calculator"></i> Cotizar Servidor
-        </a>
-      </div>
-      <div class="card-preview-visual">
-        <div class="mockup-header">
-          <div class="mockup-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
-          <span class="mockup-badge">Veeam Orchestration Console</span>
-        </div>
-        <div class="mockup-body">
-          <div class="status-row"><span>Job: Backup_Servidor_SRV01</span><span class="status-online">100% OK</span></div>
-          <div class="status-row"><span>Punto de Restauración:</span><span>Hoy 02:00 AM</span></div>
-          <div class="status-row"><span>Inmutabilidad Bloqueada:</span><span>30 Días</span></div>
-          <div class="status-row"><span>Destino Bóveda:</span><span>s3.nubexpro.mx</span></div>
-        </div>
-      </div>
-    </div>
+   
 
     <!-- CONTENIDO PESTAÑA 3: CCTV -->
     <div class="service-card" id="card-cctv">
@@ -678,7 +679,429 @@
       </div>
     </div>
   </div>
+<!-- ... existing code ... -->
+    <!-- MAIN HERO SECTION -->
+    <!-- (Tu sección Hero actual finaliza aquí) -->
 
+    <!-- ================================================================= -->
+    <!-- INICIO: SECCIÓN DE INTEGRACIONES, CALCULADORA Y RETENCIÓN PYME   -->
+    <!-- ================================================================= -->
+    <section class="nubexpro-engagement-section">
+      <style>
+        .nubexpro-engagement-section {
+          background-color: var(--light-bg);
+          padding: 4rem 1.5rem;
+          color: var(--slate);
+          font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .nx-container {
+          max-w-width: 1200px;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .nx-header {
+          text-align: center;
+          margin-bottom: 3rem;
+        }
+
+        .nx-badge-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background-color: rgba(2, 132, 199, 0.1);
+          color: var(--primary-dark);
+          font-size: 0.8125rem;
+          font-weight: 700;
+          padding: 0.35rem 0.85rem;
+          border-radius: 9999px;
+          border: 1px solid rgba(2, 132, 199, 0.2);
+          margin-bottom: 1rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        .nx-title {
+          font-size: 2rem;
+          font-weight: 800;
+          color: var(--dark);
+          line-height: 1.25;
+          margin-bottom: 0.75rem;
+        }
+
+        .nx-subtitle {
+          font-size: 1.05rem;
+          color: var(--slate);
+          max-width: 680px;
+          margin: 0 auto;
+        }
+
+        /* GRID DE INTEGRACIONES */
+        .nx-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+          gap: 1.25rem;
+          margin-bottom: 3.5rem;
+        }
+
+        .nx-card {
+          background-color: var(--card-bg);
+          border: 1px solid var(--border);
+          border-radius: 1rem;
+          padding: 1.5rem;
+          text-align: center;
+          box-shadow: var(--shadow-sm);
+          transition: var(--transition);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .nx-card:hover {
+          transform: translateY(-4px);
+          box-shadow: var(--shadow-lg);
+          border-color: var(--primary);
+        }
+
+        .nx-icon-wrapper {
+          width: 3.5rem;
+          height: 3.5rem;
+          border-radius: 0.85rem;
+          background: rgba(2, 132, 199, 0.08);
+          color: var(--primary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.6rem;
+          margin: 0 auto 1rem auto;
+          transition: var(--transition);
+        }
+
+        .nx-card:hover .nx-icon-wrapper {
+          background-color: var(--primary);
+          color: #ffffff;
+        }
+
+        .nx-card-title {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: var(--dark);
+          margin-bottom: 0.35rem;
+        }
+
+        .nx-card-desc {
+          font-size: 0.8125rem;
+          color: var(--slate);
+          margin-bottom: 0.85rem;
+        }
+
+        .nx-card-tag {
+          display: inline-block;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: var(--accent-hover);
+          background-color: rgba(16, 185, 129, 0.12);
+          padding: 0.2rem 0.65rem;
+          border-radius: 9999px;
+        }
+
+        /* CALCULADORA DE IMPULSO */
+        .nx-calc-box {
+          background-color: var(--dark);
+          color: #ffffff;
+          border-radius: 1.5rem;
+          padding: 2.5rem 2rem;
+          box-shadow: var(--shadow-lg);
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2.5rem;
+          align-items: center;
+        }
+
+        @media (max-width: 900px) {
+          .nx-calc-box {
+            grid-template-columns: 1fr;
+            padding: 1.75rem 1.25rem;
+          }
+        }
+
+        .nx-calc-title {
+          font-size: 1.5rem;
+          font-weight: 800;
+          color: #ffffff;
+          margin-bottom: 0.75rem;
+        }
+
+        .nx-calc-desc {
+          color: #94a3b8;
+          font-size: 0.925rem;
+          margin-bottom: 1.5rem;
+          line-height: 1.5;
+        }
+
+        .nx-form-group {
+          margin-bottom: 1.25rem;
+        }
+
+        .nx-form-label {
+          display: block;
+          font-size: 0.8125rem;
+          font-weight: 600;
+          color: #cbd5e1;
+          margin-bottom: 0.4rem;
+        }
+
+        .nx-range-slider {
+          width: 100%;
+          accent-color: var(--primary);
+          cursor: pointer;
+        }
+
+        .nx-result-card {
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 1rem;
+          padding: 1.5rem;
+          text-align: center;
+        }
+
+        .nx-result-value {
+          font-size: 2.25rem;
+          font-weight: 900;
+          color: #ef4444;
+          margin: 0.5rem 0;
+        }
+
+        .nx-btn-group {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+          margin-top: 1.5rem;
+        }
+
+        .nx-btn-primary {
+          background-color: var(--accent);
+          color: #ffffff;
+          font-weight: 700;
+          padding: 0.85rem 1.5rem;
+          border-radius: 0.65rem;
+          border: none;
+          cursor: pointer;
+          transition: var(--transition);
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          text-decoration: none;
+          font-size: 0.925rem;
+        }
+
+        .nx-btn-primary:hover {
+          background-color: var(--accent-hover);
+          transform: translateY(-2px);
+        }
+
+        .nx-btn-secondary {
+          background-color: transparent;
+          color: #ffffff;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          font-weight: 600;
+          padding: 0.85rem 1.5rem;
+          border-radius: 0.65rem;
+          cursor: pointer;
+          transition: var(--transition);
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          text-decoration: none;
+          font-size: 0.925rem;
+        }
+
+        .nx-btn-secondary:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+          border-color: #ffffff;
+        }
+
+        /* STICKY BOTTOM BAR PARA MÓVILES */
+        .nx-sticky-bar {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background-color: #0f172a;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          padding: 0.75rem 1rem;
+          z-index: 999;
+          display: none;
+          align-items: center;
+          justify-content: space-between;
+          box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+          .nx-sticky-bar {
+            display: flex;
+          }
+          .nubexpro-engagement-section {
+            padding-bottom: 5.5rem;
+          }
+        }
+
+        .nx-wa-btn {
+          background-color: #25d366;
+          color: #ffffff;
+          font-weight: 700;
+          font-size: 0.85rem;
+          padding: 0.6rem 1rem;
+          border-radius: 0.5rem;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+        }
+      </style>
+
+      <div class="nx-container">
+        <!-- HEADER DE LA SECCIÓN -->
+        <div class="nx-header">
+          <div class="nx-badge-tag">
+            <i class="fa-solid fa-shield-halved"></i> Compatibilidad y Seguridad Total
+          </div>
+          <h2 class="nx-title">
+            Compatibilidad Nativa con tus Sistemas Contables y Ciberseguridad Antiransomware
+          </h2>
+          <p class="nx-subtitle">
+            Conecta la nube de NubeXpro como si fuera una unidad de disco duro local en tus computadoras, protegiendo tus bases de datos sin detener la operación diaria.
+          </p>
+        </div>
+
+        <!-- TARJETAS DE INTEGRACIÓN (CONTPAQi, Aspel, QuickBooks, Veeam, Wasabi) -->
+        <div class="nx-grid">
+          
+          <!-- CONTPAQi -->
+          <div class="nx-card">
+            <div class="nx-icon-wrapper">
+              <i class="fa-solid fa-calculator"></i>
+            </div>
+            <h3 class="nx-card-title">CONTPAQi®</h3>
+            <p class="nx-card-desc">Bases de datos SQL (.mdf/.ldf) y XMLs de facturación.</p>
+            <span class="nx-card-tag"><i class="fa-solid fa-check"></i> Respaldo en Caliente</span>
+          </div>
+
+          <!-- ASPEL -->
+          <div class="nx-card">
+            <div class="nx-icon-wrapper">
+              <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+            <h3 class="nx-card-title">Aspel®</h3>
+            <p class="nx-card-desc">Sistemas SAE, COI, NOI y BANCO resguardados automáticamente.</p>
+            <span class="nx-card-tag"><i class="fa-solid fa-check"></i> Sincronización S3</span>
+          </div>
+
+          <!-- QUICKBOOKS -->
+          <div class="nx-card">
+            <div class="nx-icon-wrapper">
+              <i class="fa-solid fa-receipt"></i>
+            </div>
+            <h3 class="nx-card-title">QuickBooks®</h3>
+            <p class="nx-card-desc">Formatos .QBW y .QBB con cifrado de extremo a extremo.</p>
+            <span class="nx-card-tag"><i class="fa-solid fa-check"></i> Auto-Encriptado</span>
+          </div>
+
+          <!-- VEEAM -->
+          <div class="nx-card">
+            <div class="nx-icon-wrapper">
+              <i class="fa-solid fa-server"></i>
+            </div>
+            <h3 class="nx-card-title">Veeam® Backup & Replication ó Duplicati </h3>
+            <p class="nx-card-desc">Destino de almacenamiento inmutable contra Ransomware.</p>
+            <span class="nx-card-tag"><i class="fa-solid fa-lock"></i> Inmutabilidad</span>
+          </div>
+
+          <!-- WASABI S3 -->
+          <div class="nx-card">
+            <div class="nx-icon-wrapper">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <h3 class="nx-card-title">Wasabi S3</h3>
+            <p class="nx-card-desc">Infraestructura Hot Cloud con cero costo de descarga/egreso.</p>
+            <span class="nx-card-tag"><i class="fa-solid fa-bolt"></i> 100% Velocidad</span>
+          </div>
+
+        </div>
+
+        <!-- CALCULADORA INTERACTIVA DE RIESGO DE PARO PYME -->
+        <div class="nx-calc-box">
+          <div>
+            <div style="color: var(--primary); font-weight: 700; font-size: 0.8125rem; text-transform: uppercase; margin-bottom: 0.5rem;">
+              <i class="fa-solid fa-chart-line"></i> Herramienta de Diagnóstico Rápido
+            </div>
+            <h3 class="nx-calc-title">Calcula el Costo de Detener tu Empresa por Ransomware o Fallo</h3>
+            <p class="nx-calc-desc">
+              Si el servidor contable o tu equipo principal falla hoy, ¿cuánto pierde tu PyME por cada hora inactiva?
+            </p>
+
+            <div class="nx-form-group">
+              <label class="nx-form-label" for="nxColaboradores">Número de Empleados Afectados: <strong id="nxColabVal" style="color:#0284c7;">5</strong></label>
+              <input type="range" id="nxColaboradores" min="1" max="50" value="5" class="nx-range-slider" oninput="updateNxCalc()">
+            </div>
+
+            <div class="nx-form-group">
+              <label class="nx-form-label" for="nxHoras">Horas para Restaurar sin NubeXpro: <strong id="nxHorasVal" style="color:#0284c7;">24 hrs</strong></label>
+              <input type="range" id="nxHoras" min="4" max="72" value="24" class="nx-range-slider" oninput="updateNxCalc()">
+            </div>
+          </div>
+
+          <div class="nx-result-card">
+            <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 600;">Pérdida Estimada por Inactividad:</span>
+            <div class="nx-result-value" id="nxLossResult">$18,000 MXN</div>
+            <p style="font-size: 0.8rem; color: #cbd5e1; margin-bottom: 1.25rem;">
+              Con NubeXpro recuperas tu información en <strong style="color:var(--accent);">menos de 15 minutos</strong>.
+            </p>
+
+            <div class="nx-btn-group" style="justify-content: center;">
+              <a href="#contacto" class="nx-btn-primary">
+                <i class="fa-solid fa-shield-cat"></i> Blindar mi Empresa Gratis
+              </a>
+              <a href="https://wa.me/?text=Hola%20NubeXpro,%20hice%20el%20c%C3%A1lculo%20en%20su%20web%20y%20quiero%20probar%20el%20respaldo%20para%20mi%20empresa" target="_blank" class="nx-btn-secondary">
+                <i class="fa-brands fa-whatsapp" style="color:#25d366;"></i> Asesoría Exprés
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BARRA STICKY INFERIOR PARA CONVERSIÓN EN MÓVILES -->
+    <div class="nx-sticky-bar">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; display: inline-block;"></span>
+        <span style="color: #ffffff; font-size: 0.8rem; font-weight: 600;">Respaldos PyME desde $0</span>
+      </div>
+      <a href="https://wa.me/?text=Hola%20NubeXpro,%20quiero%20solicitar%20la%20prueba%20gratuita%20de%20respaldo" target="_blank" class="nx-wa-btn">
+        <i class="fa-brands fa-whatsapp"></i> Probar Gratis
+      </a>
+    </div>
+
+    <!-- SCRIPT DE CÁLCULO DINÁMICO -->
+    <script>
+      function updateNxCalc() {
+        const colab = parseInt(document.getElementById('nxColaboradores').value);
+        const horas = parseInt(document.getElementById('nxHoras').value);
+        
+        document.getElementById('nxColabVal').innerText = colab;
+        document.getElementById('nxHorasVal').innerText = horas + ' hrs';
+        
+        // Estimación de costo por hora inactiva ($150 MXN valor/hora promedio por colaborador)
+        const loss = colab * horas * 150;
+        document.getElementById('nxLossResult').innerText = '$' + loss.toLocaleString('es-MX') + ' MXN';
+      }
+    </script>
+    <!-- ================================================================= -->
+    <!-- FIN: SECCIÓN DE INTEGRACIONES, CALCULADORA Y RETENCIÓN PYME      -->
+    <!-- ================================================================= -->
+
+<!-- ... existing code ... -->
   <!-- ==========================================================================
        FOOTER PROFESIONAL NUBEXPRO
        ========================================================================== -->
